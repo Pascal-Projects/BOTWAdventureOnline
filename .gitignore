@@ -1,0 +1,3 @@
+# Project exclude paths
+/out/
+/src/com/botwAdventureOnline/saves/save.txt
