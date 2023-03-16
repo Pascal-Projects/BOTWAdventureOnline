@@ -9,7 +9,7 @@ import java.util.*;
 public class Main {
 
     private static double difficulty = -1;
-
+    private static Thread autosaveThread;
     private static Player player;
     private static Inventory inventory;
     private static GameMap map;
@@ -58,7 +58,8 @@ public class Main {
             }
         };
 
-        new Thread(autoSave).start();
+        autosaveThread = new Thread(autoSave);
+        autosaveThread.start();
     }
 
     public static void play() throws InvocationTargetException, IllegalAccessException {
@@ -68,6 +69,7 @@ public class Main {
             input = scanner.next();
             if ("quit".equals(input)) {
                 scanner.close();
+                autosaveThread.interrupt();
                 break;
             } else {
                 if (commands.containsKey(input)) {
