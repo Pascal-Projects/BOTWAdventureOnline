@@ -3,7 +3,11 @@ package com.botwAdventureOnline;
 
 import java.io.*;
 
-public class SaveManager {
+public class SaveManager extends Thread {
+
+    public SaveManager() {
+        super("AutosaveManager");
+    }
 
     /**
      * Saves the current game state to a file every time the player did something
@@ -24,6 +28,7 @@ public class SaveManager {
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         }
+
     }
 
     /**
@@ -42,6 +47,7 @@ public class SaveManager {
 
             fos.close();
             oos.close();
+            System.out.println("Saved!");
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         }
@@ -72,4 +78,6 @@ public class SaveManager {
             System.out.println("Error initializing stream");
         }
     }
+
+
 }

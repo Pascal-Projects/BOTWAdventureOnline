@@ -1,5 +1,6 @@
 package com.botwAdventureOnline;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -18,17 +19,20 @@ public class Main {
     private static int mapHeight;
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
+    private static final int autoSaveIntervalSeconds = 5;
 
     /**
      * Method to configure and start the game.
      */
     public static void main(String[] args) throws Exception {
-        String input;
 
         addCommands();
 
 
         initiateGame();
+
+        startAutoSave();
+
 
         if (!"".equals(playerName) && mapHeight > 0 && mapWidth > 0) {
             map = new GameMap(mapWidth, mapHeight);
@@ -37,23 +41,44 @@ public class Main {
             map.addHestu(0, 0);
             map.addMasterSword();
             Random random = new Random();
+            play();
+        }
+    }
+
+    public static void startAutoSave() {
+        Runnable autoSave = () -> {
+            //noinspection InfiniteLoopStatement
             while (true) {
-                System.out.println(">");
-                input = scanner.next();
-                if ("quit".equals(input)) {
-                    scanner.close();
-                    break;
-                } else {
-                    if (commands.containsKey(input)) {
-                        commands.get(input).invoke(null);
-                    } else {
-                        System.out.println("You run around in circles and don't know what to do.");
-                    }
-                    checkHestu();
+                try {
+                    //noinspection BusyWait
+                    Thread.sleep(1000L * autoSaveIntervalSeconds);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                levelUp();
                 SaveManager.autoSave(player, map);
             }
+        };
+
+        new Thread(autoSave).start();
+    }
+
+    public static void play() throws InvocationTargetException, IllegalAccessException {
+        String input;
+        while (true) {
+            System.out.println(">");
+            input = scanner.next();
+            if ("quit".equals(input)) {
+                scanner.close();
+                break;
+            } else {
+                if (commands.containsKey(input)) {
+                    commands.get(input).invoke(null);
+                } else {
+                    System.out.println("You run around in circles and don't know what to do.");
+                }
+                checkHestu();
+            }
+            levelUp();
         }
     }
 
@@ -260,7 +285,7 @@ public class Main {
                 }
                 counter++;
             }
-            System.out.println("What is the Item you would like to buy?");
+            System.out.println("What is the Item you would like to pickup?");
             int choice = scanner.nextInt();
             if (choice == 0) {
                 System.out.println("Please select a item");
