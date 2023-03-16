@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * A Merchant is a character that can buy items from the player or sell potions to him
- *
- * @extends Character
- */
 public class Merchant extends Character {
     /**
      * The stock of the merchant, which is a list of potions that the merchant can sell
