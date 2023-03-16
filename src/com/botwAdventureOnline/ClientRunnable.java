@@ -3,16 +3,17 @@ package com.botwAdventureOnline;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientRunnable implements Runnable {
 
     private final BufferedReader input;
-    // private PrintWriter output;
+    private PrintWriter output;
 
     public ClientRunnable(Socket s) throws IOException {
         this.input = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        // this.output = new PrintWriter(socket.getOutputStream(),true);
+        this.output = new PrintWriter(s.getOutputStream(),true);
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
