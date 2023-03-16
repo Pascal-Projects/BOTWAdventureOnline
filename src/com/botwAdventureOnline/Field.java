@@ -192,7 +192,7 @@ public class Field implements Serializable {
                     if (item.getName().equals("Experience Potion")) {
                         System.out.println("• " + item.getName() + " (Experience points: " + item.getExperiencePoints()
                                 + ", Value: " + item.getValue() + " Rupees)");
-                    } else if (item.getName().equals("Health com.botwAdventureOnline.Items.Potion")) {
+                    } else if (item.getName().equals("Health Potion")) {
                         System.out.println("• " + item.getName() + " (Health points: " + item.getHealthPoints() + ", Value: "
                                 + item.getValue() + " Rupees)");
                     } else {

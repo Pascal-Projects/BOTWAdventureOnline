@@ -183,20 +183,20 @@ public class Main {
             int choice;
             ArrayList<Item> potionList = inventory.getPotions();
             for (Item potion : potionList) {
-                if (potion.getName().equals("Experience com.botwAdventureOnline.Items.Potion")) {
+                if (potion.getName().equals("Experience Potion")) {
                     System.out.println(counter + ". " + potion.getName() + "(Health Points: " + potion.getHealthPoints() + ")");
-                } else if (potion.getName().equals("Health com.botwAdventureOnline.Items.Potion")) {
+                } else if (potion.getName().equals("Health Potion")) {
                     System.out.println(counter + ". " + potion.getName() + "(Health Points: " + potion.getHealthPoints() + ")");
                 }
                 counter++;
             }
             choice = scanner.nextInt() - 1;
             if (0 <= choice && choice < potionList.size()) {
-                if (potionList.get(choice).getName().equals("Experience com.botwAdventureOnline.Items.Potion")) {
+                if (potionList.get(choice).getName().equals("Experience Potion")) {
                     player.setEp(player.getEp() + potionList.get(choice).getHealthPointsInt());
                     inventory.setWeight(inventory.getWeight() - potionList.get(choice).getWeightInt());
                     inventory.removePotion(potionList.get(choice));
-                } else if (potionList.get(choice).getName().equals("Health com.botwAdventureOnline.Items.Potion")) {
+                } else if (potionList.get(choice).getName().equals("Health Potion")) {
                     if (player.getHp() + potionList.get(choice).getHealthPointsInt() <= player.getMaxHp()) {
                         player.setHp(player.getHp() + potionList.get(choice).getHealthPointsInt());
                         inventory.setWeight(inventory.getWeight() - potionList.get(choice).getWeightInt());
@@ -248,10 +248,10 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Which item would you like to pick up?");
             for (Item item : map.getLoot()) {
-                if (item.getName().equals("Experience com.botwAdventureOnline.Items.Potion")) {
+                if (item.getName().equals("Experience Potion")) {
                     System.out.println(counter + ". " + item.getName() + " (Experience points: " + item.getExperiencePoints()
                             + ", Value: " + item.getValue() + " Rupees)");
-                } else if (item.getName().equals("Health com.botwAdventureOnline.Items.Potion")) {
+                } else if (item.getName().equals("Health Potion")) {
                     System.out.println(counter + ". " + item.getName() + " (Health points: " + item.getHealthPoints() + ", Value: "
                             + item.getValue() + " Rupees)");
                 } else {
@@ -260,7 +260,7 @@ public class Main {
                 }
                 counter++;
             }
-            System.out.println("What is the com.botwAdventureOnline.Items.Item you would like to buy?");
+            System.out.println("What is the Item you would like to buy?");
             int choice = scanner.nextInt();
             if (choice == 0) {
                 System.out.println("Please select a item");
@@ -268,18 +268,18 @@ public class Main {
                 if (0 < choice && choice <= map.getLoot().size()) {
                     if (inventory.getWeight() + map.getLoot().get(choice - 1).getWeightInt() <= inventory.getMaxWeight()) {
                         String itemName = map.getLoot().get(choice - 1).getName();
-                        if (itemName.equals("Experience com.botwAdventureOnline.Items.Potion") || itemName.equals("Health com.botwAdventureOnline.Items.Potion")) {
+                        if (itemName.equals("Experience Potion") || itemName.equals("Health Potion")) {
                             inventory.addPotion(map.getLoot().get(choice - 1));
                             inventory.setWeight(inventory.getWeight() + map.getLoot().get(choice - 1).getWeightInt());
                             map.removeLoot(map.getLoot().get(choice - 1));
                         } else {
-                            if (itemName.equals("Master com.botwAdventureOnline.Items.Sword")) {
+                            if (itemName.equals("Master Sword")) {
                                 if (player.getHp() >= 300) {
                                     inventory.addSword(map.getLoot().get(choice - 1));
                                     inventory.setWeight(inventory.getWeight() + map.getLoot().get(choice - 1).getWeightInt());
                                     map.removeLoot(map.getLoot().get(choice - 1));
                                 } else {
-                                    System.out.println("You are not yet strong enough to pick up the Master com.botwAdventureOnline.Items.Sword!");
+                                    System.out.println("You are not yet strong enough to pick up the Master Sword!");
                                 }
                             } else {
                                 inventory.addSword(map.getLoot().get(choice - 1));
@@ -339,7 +339,7 @@ public class Main {
                 double rand = random.nextDouble(20 / difficulty);
                 if (rand == 1) {
                     System.out.println("Attack from " + enemies.get(i).getName() + " blocked!");
-                    if (enemies.get(i).getName().equals("com.botwAdventureOnline.Character.Guardian")) {
+                    if (enemies.get(i).getName().equals("Guardian")) {
                         enemies.get(i).die();
                         player.setEp(player.getEp() + enemies.get(i).getEp());
                         map.addLoot(enemies.get(i).getLoot());
@@ -368,10 +368,10 @@ public class Main {
     public static void printInventory() {
         System.out.println("\nInventory of " + player.getName() + ":");
         for (Item potion : inventory.getPotions()) {
-            if (potion.getName().equals("Health com.botwAdventureOnline.Items.Potion")) {
-                System.out.println("Health com.botwAdventureOnline.Items.Potion (Health points: " + potion.getHealthPoints() + ", Value: " + potion.getValue() + " Rupees)");
-            } else if (potion.getName().equals("Experience com.botwAdventureOnline.Items.Potion")) {
-                System.out.println("Experience com.botwAdventureOnline.Items.Potion (Experience points: " + potion.getExperiencePoints() + ", Value: " + potion.getValue() + " Rupees)");
+            if (potion.getName().equals("Health Potion")) {
+                System.out.println("Health Potion (Health points: " + potion.getHealthPoints() + ", Value: " + potion.getValue() + " Rupees)");
+            } else if (potion.getName().equals("Experience Potion")) {
+                System.out.println("Experience Potion (Experience points: " + potion.getExperiencePoints() + ", Value: " + potion.getValue() + " Rupees)");
             }
         }
         for (Item sword : inventory.getSwords()) {
@@ -415,7 +415,7 @@ public class Main {
                 map.removeKorok();
             } else {
                 System.out.println("Incorrect!");
-                System.out.println("The com.botwAdventureOnline.Character.Korok laughs at you and runs away!");
+                System.out.println("The Korok laughs at you and runs away!");
             }
         } else {
             System.out.println("There is no korok here!");
