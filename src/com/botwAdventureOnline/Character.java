@@ -2,12 +2,6 @@ package com.botwAdventureOnline;
 
 import java.io.Serializable;
 
-/**
- * Class which represents a Character in the game. Both players and monsters are
- * characters
- *
- * @implements Serializable
- */
 public class Character implements Serializable {
 
     /**

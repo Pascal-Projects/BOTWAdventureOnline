@@ -1,10 +1,6 @@
 package com.botwAdventureOnline;
 
-/**
- * An Experience Potion is a potion that can be used to gain experience
- *
- * @extends Potion
- */
+
 public class ExperiencePotion extends Potion {
 
     /**

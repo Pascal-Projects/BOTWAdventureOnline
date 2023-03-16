@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * A field contains loot, monsters, merchants and koroks
- */
+
 public class Field implements Serializable {
     private static final Random random = new Random();
     /**

@@ -2,11 +2,7 @@ package com.botwAdventureOnline;
 
 import java.util.Random;
 
-/**
- * A Bokoblin is a Monster, which is not that strong
- * 
- * @extends Monster
- */
+
 public class Bokoblin extends Monster {
 
     /**
