@@ -2,9 +2,6 @@ package com.botwAdventureOnline;
 
 import java.util.Random;
 
-/**
- * A Guardian is a strong enemy, but it dies if his attack is blocked
- */
 public class Guardian extends Monster {
 
 

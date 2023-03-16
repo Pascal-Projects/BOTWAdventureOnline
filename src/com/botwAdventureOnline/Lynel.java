@@ -2,11 +2,7 @@ package com.botwAdventureOnline;
 
 import java.util.Random;
 
-/**
- * A Lynel is a strong enemy
- *
- * @extends Monster
- */
+
 public class Lynel extends Monster {
     /**
      * Object to generate random numbers

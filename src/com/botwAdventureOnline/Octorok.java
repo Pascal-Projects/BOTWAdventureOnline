@@ -2,9 +2,6 @@ package com.botwAdventureOnline;
 
 import java.util.Random;
 
-/**
- * An Octorok is a Monster which has not much health points but deals more damage
- */
 public class Octorok extends Monster {
 
     /**
