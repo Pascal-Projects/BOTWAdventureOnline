@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class Client {
 
     private static final Map<String, Method> commandsLocal = new HashMap<>();
