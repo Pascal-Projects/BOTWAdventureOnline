@@ -10,31 +10,21 @@ public class GameMap implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     /**
-     * The final map of the game.
-     */
-    private Field[][] karteFull;
-    /**
      * An object to generate random numbers.
      */
     private static final Random random = new Random();
-
     /**
      * The width of the map
      */
     private final int width;
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     /**
      * The height of the map
      */
     private final int height;
+    /**
+     * The final map of the game.
+     */
+    private Field[][] karteFull;
 
     /**
      * @param pWidth  Sets the width of the map
@@ -60,6 +50,13 @@ public class GameMap implements Serializable {
         System.out.println(Arrays.deepToString(karteFull));
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     public void addLoot(Player player, Item item) {
         karteFull[player.getXCoordinate()][player.getYCoordinate()].addLoot(item);
@@ -190,5 +187,9 @@ public class GameMap implements Serializable {
 
     public void removeLoot(Player player, Item item) {
         karteFull[player.getXCoordinate()][player.getYCoordinate()].removeLoot(item);
+    }
+
+    public Field getField(int playerX, int playerY) {
+        return karteFull[playerX][playerY];
     }
 }

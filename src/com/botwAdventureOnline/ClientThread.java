@@ -63,7 +63,12 @@ public class ClientThread extends Thread {
                 String input = dis.readUTF();
                 commands.get(input).invoke(this);
             } catch (IOException | InvocationTargetException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                try {
+                    clientSocket.close();
+                } catch (IOException ex) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -74,6 +79,7 @@ public class ClientThread extends Thread {
         addCommand("backward", "backward");
         addCommand("left", "left");
         addCommand("right", "right");
+        addCommand("look", "printState");
     }
 
     public void test() throws IOException {
@@ -103,5 +109,52 @@ public class ClientThread extends Thread {
     public void right() throws IOException {
         int playerY = dis.readInt();
         dos.writeBoolean(playerY != Server.getWidth() - 1);
-        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " ("  + clientSocket + ")");    }
+        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+    }
+
+    public void printState() throws IOException {
+        int playerX = dis.readInt();
+        int playerY = dis.readInt();
+        StringBuilder message = new StringBuilder("You look around and see: \n\n");
+        Field playerField = Server.getField(playerX, playerY);
+        if (playerField.getMonsters().isEmpty() && playerField.getMerchant() == null && playerField.getLoot().isEmpty() && !playerField.hasKoroks() && playerField.getHestu() == null) {
+            dos.writeUTF("You look around, but don't see anything interesting.");
+        } else {
+            if (!playerField.getMonsters().isEmpty()) {
+                message.append("Monsters: ");
+                for (Character monster : playerField.getMonsters()) {
+                    message.append("\n• ").append(monster.getName());
+                }
+            }
+            if (!playerField.getLoot().isEmpty()) {
+                message.append("\nLoot: ");
+                for (Item item : playerField.getLoot()) {
+                    if (item.getName().equals("Experience Potion")) {
+                        message.append("\n• ").append(item.getName()).append(" (Experience points: ").append(item.getExperiencePoints()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                    } else if (item.getName().equals("Health Potion")) {
+                        message.append("\n• ").append(item.getName()).append(" (Health points: ").append(item.getHealthPoints()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                    } else {
+                        message.append("\n• ").append(item.getName()).append(" (Damage: ").append(item.getDamage()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                    }
+                }
+            }
+            if (playerField.hasKoroks()) {
+                for (Korok korok : playerField.getKoroks()) {
+                    message.append("\nKoroks: ").append(korok.getName());
+                }
+            }
+            if (playerField.getHestu() != null) {
+                message.append("\nHestu");
+            }
+            if (playerField.getMerchant() != null) {
+                if (!playerField.getMonsters().isEmpty()) {
+                    message.append("\n\n").append(playerField.getMerchant().getName()).append(", the merchant, hides from monsters.\n");
+                    message.append("You can trade with ").append(playerField.getMerchant().getName()).append(" when there are no monsters on the field");
+                } else {
+                    message.append("\n").append(playerField.getMerchant().getName()).append(", the merchant who greets you.\n");
+                }
+            }
+            dos.writeUTF(message.toString());
+        }
+    }
 }

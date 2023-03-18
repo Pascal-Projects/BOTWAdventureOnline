@@ -222,4 +222,8 @@ public class Server {
     public static void setMap(GameMap pMap) {
         map = pMap;
     }
+
+    public static Field getField(int playerX, int playerY) {
+        return map.getField(playerX, playerY);
+    }
 }

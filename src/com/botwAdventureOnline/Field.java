@@ -270,4 +270,12 @@ public class Field implements Serializable {
         }
         return result;
     }
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public ArrayList<Korok> getKoroks() {
+        return koroks;
+    }
 }

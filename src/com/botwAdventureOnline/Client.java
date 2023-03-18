@@ -97,9 +97,10 @@ public class Client {
             addRemoteCommand("right", "right");
             addRemoteCommand("left", "left");
 
+            addRemoteCommand("look", "printState");
+
             /*addRemoteCommand("drop", "drop");
             addRemoteCommand("fight", "fight");
-            addRemoteCommand("look", "printState");
             addRemoteCommand("sell", "sell");
             addRemoteCommand("buy", "buy");
             addRemoteCommand("hestu", "hestu");
@@ -293,5 +294,13 @@ public class Client {
         } else {
             System.out.println("You see cliffs, but you can't jump safely");
         }
+    }
+
+    public static void printState() throws IOException {
+        String message;
+        dos.writeInt(player.getXCoordinate());
+        dos.writeInt(player.getYCoordinate());
+        message = dis.readUTF();
+        System.out.println(message);
     }
 }
