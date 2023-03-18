@@ -114,6 +114,14 @@ public class Server {
         }
     }
 
+    public static int getHeight() {
+        return map.getHeight();
+    }
+
+    public static int getWidth() {
+        return map.getWidth();
+    }
+
     public static void checkHestu() {
         if (Hestu.getHestuUsed() > 2 && !Hestu.isHestuMoved()) {
             map.removeHestu();

@@ -22,6 +22,11 @@ public class ClientThread extends Thread {
         String response;
         try {
             dos.writeUTF("Welcome to the server!");
+
+            dos.writeInt(Server.getHeight());
+
+            dos.writeInt(Server.getWidth());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

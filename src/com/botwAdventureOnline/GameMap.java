@@ -22,6 +22,15 @@ public class GameMap implements Serializable {
      * The width of the map
      */
     private final int width;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     /**
      * The height of the map
      */
