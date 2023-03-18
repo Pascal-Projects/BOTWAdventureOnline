@@ -45,18 +45,21 @@ public class Client {
         dis = new DataInputStream(connection.getInputStream());
         dos = new DataOutputStream(connection.getOutputStream());
 
+        dos.writeUTF(playerName);
+
         System.out.println(dis.readUTF());
 
         mapHeight = dis.readInt();
 
         mapWidth = dis.readInt();
 
+
         player = new Player(playerName, 200, 100, 1, random.nextInt(mapHeight), random.nextInt(mapWidth));
 
         inventory = player.getInventory();
 
         while (true) {
-            System.out.println(">");
+            System.out.print(">");
             input = scanner.next();
             if ("quit".equals(input)) {
                 scanner.close();
@@ -89,12 +92,12 @@ public class Client {
 
 
             addRemoteCommand("test", "test");
-
             addRemoteCommand("forward", "forward");
-            /*addRemoteCommand("backward", "backward");
+            addRemoteCommand("backward", "backward");
             addRemoteCommand("right", "right");
             addRemoteCommand("left", "left");
-            addRemoteCommand("drop", "drop");
+
+            /*addRemoteCommand("drop", "drop");
             addRemoteCommand("fight", "fight");
             addRemoteCommand("look", "printState");
             addRemoteCommand("sell", "sell");
@@ -252,8 +255,43 @@ public class Client {
     }
 
 
-    public static void forward() {
-        //TODO: Forward()
+    public static void forward() throws IOException {
+        dos.writeInt(player.getXCoordinate());
+        boolean forward = dis.readBoolean();
+        if (forward) {
+            player.setXCoordinate(player.getXCoordinate() + 1);
+        } else {
+            System.out.println("You see huge mountains, which you can't pass");
+        }
+    }
+
+    public static void backward() throws IOException {
+        dos.writeInt(player.getXCoordinate());
+        boolean backward = dis.readBoolean();
+        if (backward) {
+            player.setXCoordinate(player.getXCoordinate() - 1);
+        } else {
+            System.out.println("You see cliffs, but you can't jump safely");
+        }
+    }
+
+    public static void left() throws IOException {
+        dos.writeInt(player.getYCoordinate());
+        boolean left = dis.readBoolean();
+        if (left) {
+            player.setYCoordinate(player.getYCoordinate() - 1);
+        } else {
+            System.out.println("You see huge mountains, which you can't pass");
+        }
+    }
+
+    public static void right() throws IOException {
+        dos.writeInt(player.getYCoordinate());
+        boolean right = dis.readBoolean();
+        if (right) {
+            player.setYCoordinate(player.getYCoordinate() + 1);
+        } else {
+            System.out.println("You see cliffs, but you can't jump safely");
+        }
     }
 }
-

@@ -16,10 +16,13 @@ public class ClientThread extends Thread {
     private final DataOutputStream dos;
     private final Socket clientSocket;
 
-    public ClientThread(Socket client, DataInputStream pdis, DataOutputStream pdos) {
+    private final String playerName;
+
+    public ClientThread(Socket client, DataInputStream pdis, DataOutputStream pdos, String name) {
         clientSocket = client;
         dis = pdis;
         dos = pdos;
+        playerName = name;
     }
 
     public static void addCommand(String command, String method) throws NoSuchMethodException {
@@ -28,6 +31,7 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
+        Thread.currentThread().setName(playerName);
         System.out.println("Assigned to thread: " + Thread.currentThread().getName());
         String message;
         String response;
@@ -66,11 +70,38 @@ public class ClientThread extends Thread {
 
     public void addCommands() throws NoSuchMethodException {
         addCommand("test", "test");
+        addCommand("forward", "forward");
+        addCommand("backward", "backward");
+        addCommand("left", "left");
+        addCommand("right", "right");
     }
 
     public void test() throws IOException {
         System.out.println("Running test");
         System.out.println(dis.readUTF());
-        dos.writeUTF("Received command from Server");
+        dos.writeUTF("Received answer from Server");
     }
+
+    public void forward() throws IOException {
+        int playerX = dis.readInt();
+        dos.writeBoolean(playerX != Server.getHeight() - 1);
+        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+    }
+
+    public void backward() throws IOException {
+        int playerX = dis.readInt();
+        dos.writeBoolean(playerX != 0);
+        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+    }
+
+    public void left() throws IOException {
+        int playerY = dis.readInt();
+        dos.writeBoolean(playerY != 0);
+        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+    }
+
+    public void right() throws IOException {
+        int playerY = dis.readInt();
+        dos.writeBoolean(playerY != Server.getWidth() - 1);
+        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " ("  + clientSocket + ")");    }
 }

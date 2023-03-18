@@ -52,20 +52,22 @@ public class Server {
 
     public static void acceptClients(ServerSocket server) {
         Runnable acceptClient = () -> {
+            //noinspection InfiniteLoopStatement
             while (true) {
                 Socket client;
                 try {
                     client = server.accept();
-                    System.out.println("A new client has joined the game: " + client);
+                    System.out.println("A new client has joined the game");
                     System.out.println("Client IP: " + client.getInetAddress().getHostAddress());
-                    System.out.println("Waiting for commands...");
 
                     DataInputStream dis = new DataInputStream(client.getInputStream());
                     DataOutputStream dos = new DataOutputStream(client.getOutputStream());
 
+                    String playerName = dis.readUTF();
+
                     System.out.println("Assigning new Thread for this client...");
 
-                    Thread thread = new ClientThread(client, dis, dos);
+                    Thread thread = new ClientThread(client, dis, dos, playerName);
                     thread.start();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
