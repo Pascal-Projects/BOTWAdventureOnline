@@ -17,14 +17,13 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
+        System.out.println("Assigned to thread: " + Thread.currentThread().getName());
         String message;
         String response;
-        while (true) {
-            try {
-                dos.writeUTF("Test");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            dos.writeUTF("Welcome to the server!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

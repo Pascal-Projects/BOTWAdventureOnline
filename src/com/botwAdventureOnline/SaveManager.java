@@ -89,6 +89,20 @@ public class SaveManager extends Thread {
 
             fos.close();
             oos.close();
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        }
+    }
+
+    public static void saveGame(GameMap map) {
+        try {
+            FileOutputStream fos = new FileOutputStream(".\\src\\com\\botwAdventureOnline\\saves\\save.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(map);
+
+            fos.close();
+            oos.close();
             System.out.println("Saved!");
         } catch (IOException e) {
             System.out.println("Error initializing stream");
