@@ -8,7 +8,7 @@ import java.util.*;
 @SuppressWarnings("unused")
 public class Main {
 
-    private static final Map<String, Method> commands = new HashMap<>();
+    /*private static final Map<String, Method> commands = new HashMap<>();
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static final int autoSaveIntervalSeconds = 5;
@@ -21,9 +21,7 @@ public class Main {
     private static int mapWidth;
     private static int mapHeight;
 
-    /**
-     * Method to configure and start the game.
-     */
+
     public static void main(String[] args) throws Exception {
 
         addCommands();
@@ -545,5 +543,5 @@ public class Main {
 
     public static void setMap(GameMap pMap) {
         map = pMap;
-    }
+    }*/
 }
