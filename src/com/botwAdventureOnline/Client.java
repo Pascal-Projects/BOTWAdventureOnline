@@ -19,6 +19,9 @@ public class Client {
     private static int mapHeight;
 
     private static int mapWidth;
+    private static DataInputStream dis;
+
+    private static DataOutputStream dos;
 
     public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException {
 
@@ -39,8 +42,8 @@ public class Client {
 
         Socket connection = new Socket(ip, 1337);
 
-        DataInputStream dis = new DataInputStream(connection.getInputStream());
-        DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+        dis = new DataInputStream(connection.getInputStream());
+        dos = new DataOutputStream(connection.getOutputStream());
 
         System.out.println(dis.readUTF());
 
@@ -53,7 +56,7 @@ public class Client {
         inventory = player.getInventory();
 
         while (true) {
-            System.out.print(">");
+            System.out.println(">");
             input = scanner.next();
             if ("quit".equals(input)) {
                 scanner.close();
@@ -85,10 +88,10 @@ public class Client {
             addLocalCommand("position", "cords");
 
 
-
+            addRemoteCommand("test", "test");
 
             addRemoteCommand("forward", "forward");
-            addRemoteCommand("backward", "backward");
+            /*addRemoteCommand("backward", "backward");
             addRemoteCommand("right", "right");
             addRemoteCommand("left", "left");
             addRemoteCommand("drop", "drop");
@@ -98,10 +101,17 @@ public class Client {
             addRemoteCommand("buy", "buy");
             addRemoteCommand("hestu", "hestu");
             addRemoteCommand("korok", "korok");
-            addRemoteCommand("pickup", "pickUp");
+            addRemoteCommand("pickup", "pickUp");*/
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void test() throws IOException {
+        System.out.println("Running test");
+        dos.writeUTF("Received command from: " + player.getName());
+        System.out.println(dis.readUTF());
     }
 
     private static void addLocalCommand(String command, String method) throws NoSuchMethodException {
@@ -239,6 +249,11 @@ public class Client {
 
     public static void cords() {
         System.out.println("Your coordinates are X: " + player.getXCoordinate() + ", Y: " + player.getYCoordinate());
+    }
+
+
+    public static void forward() {
+        //TODO: Forward()
     }
 }
 
