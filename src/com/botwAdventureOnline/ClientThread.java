@@ -74,12 +74,19 @@ public class ClientThread extends Thread {
     }
 
     public void addCommands() throws NoSuchMethodException {
+        addCommand("ping", "ping");
+
         addCommand("test", "test");
         addCommand("forward", "forward");
         addCommand("backward", "backward");
         addCommand("left", "left");
         addCommand("right", "right");
         addCommand("look", "printState");
+    }
+
+    public void ping() throws IOException {
+        String msg = dis.readUTF();
+        dos.writeUTF(msg);
     }
 
     public void test() throws IOException {

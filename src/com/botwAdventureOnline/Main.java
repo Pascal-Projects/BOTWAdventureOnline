@@ -1,11 +1,11 @@
 package com.botwAdventureOnline;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
+//import java.lang.reflect.InvocationTargetException;
+//import java.lang.reflect.Method;
+//import java.util.*;
 
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "CommentedOutCode"})
 public class Main {
 
     /*private static final Map<String, Method> commands = new HashMap<>();

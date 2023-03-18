@@ -79,7 +79,11 @@ public class Client {
     }
 
     private static void addCommands() {
+        //noinspection CommentedOutCode
         try {
+
+            addRemoteCommand("ping", "ping");
+
             addLocalCommand("levelup", "levelUp");
             addLocalCommand("help", "printHelp");
             addLocalCommand("stats", "stats");
@@ -96,21 +100,22 @@ public class Client {
             addRemoteCommand("backward", "backward");
             addRemoteCommand("right", "right");
             addRemoteCommand("left", "left");
-
             addRemoteCommand("look", "printState");
 
-            /*addRemoteCommand("drop", "drop");
+
+            /*
+            addRemoteCommand("hestu", "hestu");
+            addRemoteCommand("korok", "korok");
+            addRemoteCommand("drop", "drop");
             addRemoteCommand("fight", "fight");
             addRemoteCommand("sell", "sell");
             addRemoteCommand("buy", "buy");
-            addRemoteCommand("hestu", "hestu");
-            addRemoteCommand("korok", "korok");
-            addRemoteCommand("pickup", "pickUp");*/
+            addRemoteCommand("pickup", "pickUp");
+            */
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public static void test() throws IOException {
         System.out.println("Running test");
@@ -255,7 +260,6 @@ public class Client {
         System.out.println("Your coordinates are X: " + player.getXCoordinate() + ", Y: " + player.getYCoordinate());
     }
 
-
     public static void forward() throws IOException {
         dos.writeInt(player.getXCoordinate());
         boolean forward = dis.readBoolean();
@@ -302,5 +306,13 @@ public class Client {
         dos.writeInt(player.getYCoordinate());
         message = dis.readUTF();
         System.out.println(message);
+    }
+
+    public static void ping() throws IOException {
+        long start = System.currentTimeMillis();
+        dos.writeUTF("ping");
+        dis.readUTF();
+        long end = System.currentTimeMillis();
+        System.out.println(end - start + " ms");
     }
 }

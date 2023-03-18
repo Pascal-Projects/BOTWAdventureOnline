@@ -1,35 +1,40 @@
 package com.botwAdventureOnline;
 
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
+@SuppressWarnings("CommentedOutCode")
 public class SaveManager extends Thread {
 
     public SaveManager() {
         super("AutosaveManager");
     }
 
-    /**
-     * Saves the current game state to a file every time the player did something
-     *
-     * @param player The player
-     * @param map    The map
-     */
-    public static void autoSave(Player player, GameMap map) {
-        try {
-            FileOutputStream fos = new FileOutputStream(".\\src\\com\\botwAdventureOnline\\saves\\save.txt");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(player);
-            oos.writeObject(map);
-
-            fos.close();
-            oos.close();
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        }
-
-    }
+// --Commented out by Inspection START (18.03.2023 18:16):
+//    /**
+//     * Saves the current game state to a file every time the player did something
+//     *
+//     * @param player The player
+//     * @param map    The map
+//     */
+//    public static void autoSave(Player player, GameMap map) {
+//        try {
+//            FileOutputStream fos = new FileOutputStream(".\\src\\com\\botwAdventureOnline\\saves\\save.txt");
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//
+//            oos.writeObject(player);
+//            oos.writeObject(map);
+//
+//            fos.close();
+//            oos.close();
+//        } catch (IOException e) {
+//            System.out.println("Error initializing stream");
+//        }
+//
+//    }
+// --Commented out by Inspection STOP (18.03.2023 18:16)
 
     /**
      * Save the current game state
@@ -54,9 +59,10 @@ public class SaveManager extends Thread {
     }
 
 
-    /**
+    /*
      * Loads the current game state from a file
      */
+    /*
     public static void loadGame() {
         try {
             FileInputStream fis = new FileInputStream(".\\src\\com\\botwAdventureOnline\\saves\\save.txt");
@@ -77,7 +83,7 @@ public class SaveManager extends Thread {
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         }
-    }
+    }*/
 
 
     public static void autoSave(GameMap map) {

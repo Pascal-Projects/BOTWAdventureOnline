@@ -20,7 +20,6 @@ public class Server {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static final int autoSaveIntervalSeconds = 5;
-    private static double difficulty = -1;
     private static Thread autosaveThread;
     private static GameMap map;
     private static int mapWidth;
@@ -132,31 +131,26 @@ public class Server {
         }
     }
 
+    @SuppressWarnings("CommentedOutCode")
     public static void addCommands() {
+        //noinspection EmptyTryBlock
         try {
-            addCommand("help", "printHelp");
-            addCommand("forward", "forward");
-            addCommand("backward", "backward");
-            addCommand("right", "right");
-            addCommand("left", "left");
-            addCommand("look", "printState");
-            addCommand("position", "cords");
-            addCommand("sell", "sell");
-            addCommand("buy", "buy");
-            addCommand("levelup", "levelUp");
-            addCommand("hestu", "hestu");
-            addCommand("korok", "korok");
-            addCommand("stats", "stats");
-            addCommand("inventory", "printInventory");
-            addCommand("dig", "dig");
-            addCommand("rest", "rest");
-            addCommand("fight", "fight");
-            addCommand("pickup", "pickUp");
-            addCommand("equip", "equip");
-            addCommand("drink", "drink");
-            addCommand("drop", "drop");
-            addCommand("save", "saveGame");
-            addCommand("load", "loadGame");
+            //addCommand("help", "printHelp");
+            //addCommand("forward", "forward");
+            //addCommand("backward", "backward");
+            //addCommand("right", "right");
+            //addCommand("left", "left");
+            //addCommand("look", "printState");
+            //addCommand("position", "cords");
+            //addCommand("stats", "stats");
+            //addCommand("inventory", "printInventory");
+            //addCommand("dig", "dig");
+//            addCommand("rest", "rest");
+//            addCommand("pickup", "pickUp");
+//            addCommand("equip", "equip");
+//            addCommand("drop", "drop");
+//            addCommand("save", "saveGame");
+//            addCommand("load", "loadGame");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,15 +162,11 @@ public class Server {
         mapHeight = scanner.nextInt();
         System.out.println("Please enter the width of the map:");
         mapWidth = scanner.nextInt();
-        difficulty = setDifficulty();
+        double difficulty = setDifficulty();
     }
 
     public static void saveGame() {
         SaveManager.saveGame(map);
-    }
-
-    public static void loadGame() {
-        SaveManager.loadGame();
     }
 
 
@@ -216,7 +206,7 @@ public class Server {
     }
 
     public static void addCommand(String pCommand, String pMethodName) throws Exception {
-        commands.put(pCommand, Main.class.getMethod(pMethodName));
+        commands.put(pCommand, Server.class.getMethod(pMethodName));
     }
 
     public static void setMap(GameMap pMap) {
