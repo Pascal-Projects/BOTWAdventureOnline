@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public class ClientThread extends Thread {
@@ -97,26 +98,43 @@ public class ClientThread extends Thread {
 
     public void forward() throws IOException {
         int playerX = dis.readInt();
+        int playerY = dis.readInt();
         dos.writeBoolean(playerX != Server.getHeight() - 1);
         System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        Random random = new Random();
+        addKorok(playerX, playerY);
     }
 
     public void backward() throws IOException {
         int playerX = dis.readInt();
+        int playerY = dis.readInt();
         dos.writeBoolean(playerX != 0);
         System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        addKorok(playerX, playerY);
     }
 
     public void left() throws IOException {
+        int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerY != 0);
         System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        addKorok(playerX, playerY);
     }
 
     public void right() throws IOException {
+        int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerY != Server.getWidth() - 1);
         System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        addKorok(playerX, playerY);
+    }
+
+    public void addKorok(int playerX, int playerY) {
+        Random random = new Random();
+        int rand = random.nextInt(10);
+        if (rand == 0) {
+            Server.getField(playerX, playerY).addKorok();
+        }
     }
 
     public void printState() throws IOException {

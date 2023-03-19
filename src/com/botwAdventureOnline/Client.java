@@ -176,11 +176,11 @@ public class Client {
                 "Total weight: " + inventory.getWeight() + " (" + inventory.getUsage() + "%)");
     }
 
-    public static void dig() {
+    public static void dig() throws IOException {
         Random random = new Random();
         player.setXCoordinate(random.nextInt(mapWidth) - 1);
         player.setYCoordinate(random.nextInt(mapHeight) - 1);
-        //printState(); TODO: PrintState()
+        printState();
     }
 
     public static void rest() {
@@ -262,9 +262,11 @@ public class Client {
 
     public static void forward() throws IOException {
         dos.writeInt(player.getXCoordinate());
+        dos.writeInt(player.getYCoordinate());
         boolean forward = dis.readBoolean();
         if (forward) {
             player.setXCoordinate(player.getXCoordinate() + 1);
+            printState();
         } else {
             System.out.println("You see huge mountains, which you can't pass");
         }
@@ -272,29 +274,35 @@ public class Client {
 
     public static void backward() throws IOException {
         dos.writeInt(player.getXCoordinate());
+        dos.writeInt(player.getYCoordinate());
         boolean backward = dis.readBoolean();
         if (backward) {
             player.setXCoordinate(player.getXCoordinate() - 1);
+            printState();
         } else {
             System.out.println("You see cliffs, but you can't jump safely");
         }
     }
 
     public static void left() throws IOException {
+        dos.writeInt(player.getXCoordinate());
         dos.writeInt(player.getYCoordinate());
         boolean left = dis.readBoolean();
         if (left) {
             player.setYCoordinate(player.getYCoordinate() - 1);
+            printState();
         } else {
             System.out.println("You see huge mountains, which you can't pass");
         }
     }
 
     public static void right() throws IOException {
+        dos.writeInt(player.getXCoordinate());
         dos.writeInt(player.getYCoordinate());
         boolean right = dis.readBoolean();
         if (right) {
             player.setYCoordinate(player.getYCoordinate() + 1);
+            printState();
         } else {
             System.out.println("You see cliffs, but you can't jump safely");
         }
