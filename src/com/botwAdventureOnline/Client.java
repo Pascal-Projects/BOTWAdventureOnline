@@ -101,12 +101,11 @@ public class Client {
             addRemoteCommand("right", "right");
             addRemoteCommand("left", "left");
             addRemoteCommand("look", "printState");
-
-
-            /*
             addRemoteCommand("hestu", "hestu");
+
             addRemoteCommand("korok", "korok");
-            addRemoteCommand("drop", "drop");
+
+            /*addRemoteCommand("drop", "drop");
             addRemoteCommand("fight", "fight");
             addRemoteCommand("sell", "sell");
             addRemoteCommand("buy", "buy");
@@ -314,6 +313,31 @@ public class Client {
         dos.writeInt(player.getYCoordinate());
         message = dis.readUTF();
         System.out.println(message);
+    }
+
+    public static void hestu() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        dos.writeInt(player.getXCoordinate());
+        dos.writeInt(player.getYCoordinate());
+        boolean hestu = dis.readBoolean();
+        if (hestu) {
+            if (inventory.getKorokSeeds() > 0) {
+                System.out.println("Do you want to increase the maximum weight of your inventory for 1 korokseed?");
+                String answer = scanner.next();
+                if (answer.equals("yes")){
+                    inventory.setMaxWeight(inventory.getMaxWeight() + 1);
+                    inventory.setKorokSeeds(inventory.getKorokSeeds() - 1);
+                }
+            } else {
+                System.out.println("You don't have any korokseeds");
+            }
+        } else {
+            System.out.println("There is no Hestu on this field");
+        }
+    }
+
+    public void korok(){
+
     }
 
     public static void ping() throws IOException {

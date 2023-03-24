@@ -182,4 +182,16 @@ public class ClientThread extends Thread {
             dos.writeUTF(message.toString());
         }
     }
+
+    public void hestu() throws IOException {
+        int playerX = dis.readInt();
+        int playerY = dis.readInt();
+        boolean hestu = Server.getField(playerX, playerY).getHestu() != null;
+        dos.writeBoolean(hestu);
+    }
+
+    public void korok() throws IOException {
+        int playerX = dis.readInt();
+        int playerY = dis.readInt();
+    }
 }
