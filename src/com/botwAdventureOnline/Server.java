@@ -43,7 +43,7 @@ public class Server {
 
         if (mapHeight > 0 && mapWidth > 0) {
             map = new GameMap(mapWidth, mapHeight);
-            map.addHestu(0, 0);
+            map.randomizeHestu();
             Random random = new Random();
             play();
         }
@@ -110,9 +110,12 @@ public class Server {
                 } else {
                     System.out.println("You run around in circles and don't know what to do.");
                 }
-                checkHestu();
             }
         }
+    }
+
+    public static GameMap getMap(){
+        return map;
     }
 
     public static int getHeight() {
@@ -121,14 +124,6 @@ public class Server {
 
     public static int getWidth() {
         return map.getWidth();
-    }
-
-    public static void checkHestu() {
-        if (Hestu.getHestuUsed() > 2 && !Hestu.isHestuMoved()) {
-            map.removeHestu();
-            map.addHestu(random.nextInt(mapWidth) - 1, random.nextInt(mapHeight) - 1);
-            Hestu.setHestuMoved(true);
-        }
     }
 
     @SuppressWarnings("CommentedOutCode")

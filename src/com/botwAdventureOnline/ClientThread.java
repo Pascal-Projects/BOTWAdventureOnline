@@ -188,6 +188,11 @@ public class ClientThread extends Thread {
         int playerY = dis.readInt();
         boolean hestu = Server.getField(playerX, playerY).getHestu() != null;
         dos.writeBoolean(hestu);
+        boolean hestuUsed = dis.readBoolean();
+        if (hestuUsed) {
+            Server.getField(playerX, playerY).removeHestu();
+            Server.getMap().randomizeHestu();
+        }
     }
 
     public void korok() throws IOException {

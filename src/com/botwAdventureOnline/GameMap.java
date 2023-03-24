@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class GameMap implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -160,14 +161,6 @@ public class GameMap implements Serializable {
         karteFull[player.getXCoordinate()][player.getYCoordinate()].buy(inventory);
     }
 
-    public void addHestu(int x, int y) {
-        karteFull[x][y].addHestu();
-    }
-
-    public void removeHestu() {
-        karteFull[0][0].removeHestu();
-    }
-
     public void addMasterSword() {
         karteFull[width - 1][height - 1].addMasterSword();
     }
@@ -191,5 +184,9 @@ public class GameMap implements Serializable {
 
     public Field getField(int playerX, int playerY) {
         return karteFull[playerX][playerY];
+    }
+
+    public void randomizeHestu() {
+        karteFull[random.nextInt(width - 1)][random.nextInt(height - 1)].addHestu();
     }
 }

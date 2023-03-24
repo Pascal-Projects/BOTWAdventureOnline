@@ -327,6 +327,7 @@ public class Client {
                 if (answer.equals("yes")){
                     inventory.setMaxWeight(inventory.getMaxWeight() + 1);
                     inventory.setKorokSeeds(inventory.getKorokSeeds() - 1);
+                    dos.writeBoolean(true);
                 }
             } else {
                 System.out.println("You don't have any korokseeds");
