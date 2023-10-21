@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,21 +9,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 
-
-@SuppressWarnings("unused")
+/**
+ * This class is the main class of the server. It contains the main method and
+ * the commands.
+ */
 public class Server {
 
     private static final Map<String, Method> commands = new HashMap<>();
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Random random = new Random();
-    private static final int autoSaveIntervalSeconds = 5;
+    private static int autoSaveIntervalSeconds = 5;
     private static Thread autosaveThread;
     private static GameMap map;
     private static int mapWidth;
     private static int mapHeight;
+
+    private static final SaveManager saveManager = new SaveManager();
 
     /**
      * Method to configure and start the game.
@@ -40,18 +42,16 @@ public class Server {
 
         startAutoSave();
 
-
         if (mapHeight > 0 && mapWidth > 0) {
             map = new GameMap(mapWidth, mapHeight);
             map.randomizeHestu();
-            Random random = new Random();
             play();
         }
     }
 
     public static void acceptClients(ServerSocket server) {
         Runnable acceptClient = () -> {
-            //noinspection InfiniteLoopStatement
+            // noinspection InfiniteLoopStatement
             while (true) {
                 Socket client;
                 try {
@@ -69,7 +69,7 @@ public class Server {
                     Thread thread = new ClientThread(client, dis, dos, playerName);
                     thread.start();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("An error occurred while accepting a client");
                 }
             }
         };
@@ -79,15 +79,14 @@ public class Server {
 
     public static void startAutoSave() {
         Runnable autoSave = () -> {
-            //noinspection InfiniteLoopStatement
             while (true) {
                 try {
-                    //noinspection BusyWait
                     Thread.sleep(1000L * autoSaveIntervalSeconds);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    Thread.currentThread().interrupt();
+                    System.out.println("Autosave interrupted");
                 }
-                SaveManager.autoSave(map);
+                saveManager.autoSave(map);
             }
         };
 
@@ -114,7 +113,7 @@ public class Server {
         }
     }
 
-    public static GameMap getMap(){
+    public static GameMap getMap() {
         return map;
     }
 
@@ -128,27 +127,33 @@ public class Server {
 
     @SuppressWarnings("CommentedOutCode")
     public static void addCommands() {
-        //noinspection EmptyTryBlock
         try {
-            //addCommand("help", "printHelp");
-            //addCommand("forward", "forward");
-            //addCommand("backward", "backward");
-            //addCommand("right", "right");
-            //addCommand("left", "left");
-            //addCommand("look", "printState");
-            //addCommand("position", "cords");
-            //addCommand("stats", "stats");
-            //addCommand("inventory", "printInventory");
-            //addCommand("dig", "dig");
-//            addCommand("rest", "rest");
-//            addCommand("pickup", "pickUp");
-//            addCommand("equip", "equip");
-//            addCommand("drop", "drop");
-//            addCommand("save", "saveGame");
-//            addCommand("load", "loadGame");
+            // addCommand("help", "printHelp");
+            // addCommand("forward", "forward");
+            // addCommand("backward", "backward");
+            // addCommand("right", "right");
+            // addCommand("left", "left");
+            // addCommand("look", "printState");
+            // addCommand("position", "cords");
+            // addCommand("stats", "stats");
+            // addCommand("inventory", "printInventory");
+            // addCommand("dig", "dig");
+            // addCommand("rest", "rest");
+            // addCommand("pickup", "pickUp");
+            // addCommand("equip", "equip");
+            // addCommand("drop", "drop");
+            // addCommand("save", "saveGame");
+            // addCommand("load", "loadGame");
+            addCommand("setInterval", "setInterval");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setInterval() {
+        System.out.println("Please enter the new interval in seconds:");
+        autoSaveIntervalSeconds = scanner.nextInt();
+        System.out.println("The new interval is " + autoSaveIntervalSeconds + " seconds.");
     }
 
     public static void initiateGame() {
@@ -161,9 +166,8 @@ public class Server {
     }
 
     public static void saveGame() {
-        SaveManager.saveGame(map);
+        saveManager.saveGame(map);
     }
-
 
     public static double setDifficulty() {
         Scanner scanner = new Scanner(System.in);
@@ -175,6 +179,7 @@ public class Server {
         System.out.println("4. Hard");
         System.out.println("5. Master mode");
         choice = scanner.nextInt();
+        scanner.close();
         if (choice == 1) {
             return 3;
         } else if (choice == 2) {
@@ -192,7 +197,6 @@ public class Server {
         return -1;
     }
 
-
     public static void printHelp() {
         System.out.println("All commands: \n");
         for (Map.Entry<String, Method> entry : commands.entrySet()) {
@@ -200,8 +204,12 @@ public class Server {
         }
     }
 
-    public static void addCommand(String pCommand, String pMethodName) throws Exception {
-        commands.put(pCommand, Server.class.getMethod(pMethodName));
+    public static void addCommand(String pCommand, String pMethodName) {
+        try {
+            commands.put(pCommand, Server.class.getMethod(pMethodName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setMap(GameMap pMap) {

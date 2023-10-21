@@ -1,7 +1,8 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -10,7 +11,7 @@ public class Field implements Serializable {
     /**
      * A list of monsters in the field
      */
-    private final ArrayList<Monster> monsters;
+    private final List<Monster> monsters;
     /**
      * The merchant in the field
      */
@@ -18,7 +19,7 @@ public class Field implements Serializable {
     /**
      * A list of Items in the field
      */
-    private final ArrayList<Item> loot = new ArrayList<>();
+    private final List<Item> loot = new ArrayList<>();
     /**
      * list of koroks in the field
      */
@@ -33,7 +34,7 @@ public class Field implements Serializable {
      * @param pMerchant Sets the merchant in the field
      * @param pLoot     Sets the loot in the field
      */
-    public Field(ArrayList<Monster> pMonsters, Merchant pMerchant, ArrayList<Item> pLoot) {
+    public Field(List<Monster> pMonsters, Merchant pMerchant, List<Item> pLoot) {
         monsters = pMonsters;
         merchant = pMerchant;
         hestu = null;
@@ -46,7 +47,7 @@ public class Field implements Serializable {
      * @param pMonsters Sets the monsters in the field
      * @param pLoot     Sets the loot in the field
      */
-    public Field(ArrayList<Monster> pMonsters, ArrayList<Item> pLoot) {
+    public Field(List<Monster> pMonsters, List<Item> pLoot) {
         monsters = pMonsters;
         hestu = null;
         if (pLoot != null) {
@@ -57,7 +58,7 @@ public class Field implements Serializable {
     /**
      * @return Returns the monsters in the field
      */
-    public ArrayList<Monster> getMonsters() {
+    public List<Monster> getMonsters() {
         return monsters;
     }
 
@@ -71,7 +72,7 @@ public class Field implements Serializable {
     /**
      * @return Returns the loot in the field
      */
-    public ArrayList<Item> getLoot() {
+    public List<Item> getLoot() {
         return loot;
     }
 
@@ -275,7 +276,7 @@ public class Field implements Serializable {
         return merchant;
     }
 
-    public ArrayList<Korok> getKoroks() {
+    public List<Korok> getKoroks() {
         return koroks;
     }
 }

@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 
 public class ExperiencePotion extends Potion {

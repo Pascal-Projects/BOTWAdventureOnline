@@ -1,23 +1,24 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Inventory implements Serializable {
 
     /**
      * The currently equipped sword of the player
      */
-    public Item equippedSword;
+    private Item equippedSword;
     /**
      * The player's potions
      */
-    private final ArrayList<Item> potions;
+    private final List<Item> potions;
     /**
      * The player's swords
      */
-    private final ArrayList<Item> swords;
+    private final List<Item> swords;
     /**
      * The player's rupees
      */
@@ -51,7 +52,7 @@ public class Inventory implements Serializable {
     /**
      * @return Returns the Potions
      */
-    public ArrayList<Item> getPotions() {
+    public List<Item> getPotions() {
         return potions;
     }
 
@@ -81,7 +82,7 @@ public class Inventory implements Serializable {
     /**
      * @return returns the swords
      */
-    public ArrayList<Item> getSwords() {
+    public List<Item> getSwords() {
         return swords;
     }
 
@@ -131,7 +132,7 @@ public class Inventory implements Serializable {
      * @return Returns the percentage of the weight's usage
      */
     public double getUsage() {
-        return (double) (100 / maxWeight) * weight;
+        return (100.0 / maxWeight) * weight;
     }
 
     /**

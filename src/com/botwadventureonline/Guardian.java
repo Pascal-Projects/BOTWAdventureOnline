@@ -1,9 +1,9 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.util.Random;
 
 public class Guardian extends Monster {
-
+    private static Random random = new Random();
 
     /**
      * This Returns a Potion which is dropped by the Guardian when it gets killed
@@ -11,7 +11,6 @@ public class Guardian extends Monster {
      * @return Potion
      */
     private static Item generateLoot() {
-        Random random = new Random();
         int rand = random.nextInt(2);
         if (rand == 1) {
             return new HealthPotion(300);

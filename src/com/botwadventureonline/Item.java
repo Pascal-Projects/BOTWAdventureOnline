@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 public class Korok extends Character {
     public Korok() {

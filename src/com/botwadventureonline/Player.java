@@ -1,13 +1,10 @@
-package com.botwAdventureOnline;
-
-import java.io.Serial;
+package com.botwadventureonline;
 
 /**
  * @extends Character
  * @implements Serializable
  */
-public class Player extends Character {
-    @Serial
+public class Player extends Character{
     private static final long serialVersionUID = 1L;
 
     /**
@@ -128,6 +125,7 @@ public class Player extends Character {
     /**
      * Runs if the player is dead because he has no more health points
      */
+    @Override
     public void die() {
         System.out.println("You died");
         System.exit(0);

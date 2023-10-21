@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -16,6 +16,8 @@ public class ClientThread extends Thread {
     private final DataInputStream dis;
     private final DataOutputStream dos;
     private final Socket clientSocket;
+
+    private static final Random random = new Random();
 
     private final String playerName;
 
@@ -44,7 +46,7 @@ public class ClientThread extends Thread {
             dos.writeInt(Server.getWidth());
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            printError(e);
         }
 
         try {
@@ -53,12 +55,12 @@ public class ClientThread extends Thread {
             try {
                 clientSocket.close();
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                printError(ex);
             }
-            throw new RuntimeException(e);
+            printError(e);
         }
 
-        //noinspection InfiniteLoopStatement
+        // noinspection InfiniteLoopStatement
         while (true) {
             try {
                 String input = dis.readUTF();
@@ -72,6 +74,11 @@ public class ClientThread extends Thread {
                 }
             }
         }
+    }
+
+    public void printError(Exception e) {
+        System.out.println("An error occurred while running the command");
+        e.printStackTrace();
     }
 
     public void addCommands() throws NoSuchMethodException {
@@ -100,8 +107,7 @@ public class ClientThread extends Thread {
         int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerX != Server.getHeight() - 1);
-        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
-        Random random = new Random();
+        inform();
         addKorok(playerX, playerY);
     }
 
@@ -109,7 +115,7 @@ public class ClientThread extends Thread {
         int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerX != 0);
-        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        inform();
         addKorok(playerX, playerY);
     }
 
@@ -117,7 +123,7 @@ public class ClientThread extends Thread {
         int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerY != 0);
-        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        inform();
         addKorok(playerX, playerY);
     }
 
@@ -125,16 +131,20 @@ public class ClientThread extends Thread {
         int playerX = dis.readInt();
         int playerY = dis.readInt();
         dos.writeBoolean(playerY != Server.getWidth() - 1);
-        System.out.println("Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
+        inform();
         addKorok(playerX, playerY);
     }
 
     public void addKorok(int playerX, int playerY) {
-        Random random = new Random();
         int rand = random.nextInt(10);
         if (rand == 0) {
             Server.getField(playerX, playerY).addKorok();
         }
+    }
+
+    public void inform() {
+        System.out.println(
+                "Answered command from Client: " + Thread.currentThread().getName() + " (" + clientSocket + ")");
     }
 
     public void printState() throws IOException {
@@ -142,7 +152,8 @@ public class ClientThread extends Thread {
         int playerY = dis.readInt();
         StringBuilder message = new StringBuilder("You look around and see: \n\n");
         Field playerField = Server.getField(playerX, playerY);
-        if (playerField.getMonsters().isEmpty() && playerField.getMerchant() == null && playerField.getLoot().isEmpty() && !playerField.hasKoroks() && playerField.getHestu() == null) {
+        if (playerField.getMonsters().isEmpty() && playerField.getMerchant() == null && playerField.getLoot().isEmpty()
+                && !playerField.hasKoroks() && playerField.getHestu() == null) {
             dos.writeUTF("You look around, but don't see anything interesting.");
         } else {
             if (!playerField.getMonsters().isEmpty()) {
@@ -155,11 +166,16 @@ public class ClientThread extends Thread {
                 message.append("\nLoot: ");
                 for (Item item : playerField.getLoot()) {
                     if (item.getName().equals("Experience Potion")) {
-                        message.append("\n• ").append(item.getName()).append(" (Experience points: ").append(item.getExperiencePoints()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                        message.append("\n• ").append(item.getName()).append(" (Experience points: ")
+                                .append(item.getExperiencePoints()).append(", Value: ").append(item.getValue())
+                                .append(" Rupees)");
                     } else if (item.getName().equals("Health Potion")) {
-                        message.append("\n• ").append(item.getName()).append(" (Health points: ").append(item.getHealthPoints()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                        message.append("\n• ").append(item.getName()).append(" (Health points: ")
+                                .append(item.getHealthPoints()).append(", Value: ").append(item.getValue())
+                                .append(" Rupees)");
                     } else {
-                        message.append("\n• ").append(item.getName()).append(" (Damage: ").append(item.getDamage()).append(", Value: ").append(item.getValue()).append(" Rupees)");
+                        message.append("\n• ").append(item.getName()).append(" (Damage: ").append(item.getDamage())
+                                .append(", Value: ").append(item.getValue()).append(" Rupees)");
                     }
                 }
             }
@@ -173,10 +189,13 @@ public class ClientThread extends Thread {
             }
             if (playerField.getMerchant() != null) {
                 if (!playerField.getMonsters().isEmpty()) {
-                    message.append("\n\n").append(playerField.getMerchant().getName()).append(", the merchant, hides from monsters.\n");
-                    message.append("You can trade with ").append(playerField.getMerchant().getName()).append(" when there are no monsters on the field");
+                    message.append("\n\n").append(playerField.getMerchant().getName())
+                            .append(", the merchant, hides from monsters.\n");
+                    message.append("You can trade with ").append(playerField.getMerchant().getName())
+                            .append(" when there are no monsters on the field");
                 } else {
-                    message.append("\n").append(playerField.getMerchant().getName()).append(", the merchant who greets you.\n");
+                    message.append("\n").append(playerField.getMerchant().getName())
+                            .append(", the merchant who greets you.\n");
                 }
             }
             dos.writeUTF(message.toString());

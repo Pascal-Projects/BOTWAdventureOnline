@@ -1,14 +1,13 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
-@SuppressWarnings("unused")
+
 public class GameMap implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
     /**
      * An object to generate random numbers.
@@ -142,7 +141,7 @@ public class GameMap implements Serializable {
         }
     }
 
-    public ArrayList<Monster> getEnemies(Player player) {
+    public List<Monster> getEnemies(Player player) {
         return karteFull[player.getXCoordinate()][player.getYCoordinate()].getMonsters();
     }
 
@@ -174,7 +173,7 @@ public class GameMap implements Serializable {
         karteFull[player.getXCoordinate()][player.getYCoordinate()].printState();
     }
 
-    public ArrayList<Item> getLoot(Player player) {
+    public List<Item> getLoot(Player player) {
         return karteFull[player.getXCoordinate()][player.getYCoordinate()].getLoot();
     }
 

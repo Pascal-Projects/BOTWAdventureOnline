@@ -1,4 +1,4 @@
-package com.botwAdventureOnline;
+package com.botwadventureonline;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -77,6 +77,7 @@ public class Merchant extends Character {
         } else {
             System.out.println(getName() + " doesn't have any items");
         }
+        scanner.close();
     }
 
     /**
@@ -91,7 +92,7 @@ public class Merchant extends Character {
         choice = scanner.next();
         int item;
         if (choice.equalsIgnoreCase("potion")) {
-            if (inventory.getPotions().size() > 0) {
+            if (!inventory.getPotions().isEmpty()) {
                 int counter = 1;
                 for (Item potion : inventory.getPotions()) {
                     if (potion.getName().equals("Experience Potion")) {
@@ -115,8 +116,7 @@ public class Merchant extends Character {
             } else {
                 System.out.println("You don't have any potions");
             }
-        } else if (choice.equalsIgnoreCase("sword")) {
-            if (inventory.getSwords().size() > 0) {
+        } else if (choice.equalsIgnoreCase("sword") &&  (!inventory.getSwords().isEmpty())) {
                 int counter = 1;
                 for (Item sword : inventory.getSwords()) {
                     System.out.println(counter + ". " + sword.getName() + " (Damage: " + sword.getDamage() + ", Value: " + sword.getValue() + ")");
@@ -135,7 +135,8 @@ public class Merchant extends Character {
                         System.out.println("You don't have any swords");
                     }
                 }
-            }
+            
         }
+        scanner.close();
     }
 }
