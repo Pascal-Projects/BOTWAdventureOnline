@@ -13,8 +13,8 @@ reviewers:
 numberOfReviewers: 0
 
 # A list of assignees, overrides reviewers if set
-assignees:
-  - Pascal-Projects
+#assignees:
+#  - Pascal-Projects
 
 # A number of assignees to add to the PRs
 # Set to 0 to add all the assignees.
